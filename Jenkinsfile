@@ -26,7 +26,8 @@ pipeline {
 	    
 	      stage ('Deploy') {
           steps {
-            sh './hello.sh'
+		  sh 'chmod +x /var/lib/jenkins/workspace/DockerImage/hello.sh'
+		  sh './hello.sh'
             //sh './create-container.sh'
                 }
 	    }  	       
