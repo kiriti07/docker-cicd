@@ -22,6 +22,8 @@ pipeline {
                         error('Docker is not installed. Please install Docker on the Jenkins agent.')
                     }
 			sh '''
+				image_name="myweb_nginx"
+				container_name="my-nginx-container"
 				docker build -t $image_name .
 				docker run -d --name $container_name -p 8080:80 $image_name
 				docker ps
@@ -35,8 +37,8 @@ pipeline {
 	      stage ('Deploy') {
           steps {
 		  sh 'chmod +x /var/lib/jenkins/workspace/DockerImage/create-container.sh'
-		  //sh './hello.sh'
-            	  sh './create-container.sh'
+		  sh './hello.sh'
+            	  //sh './create-container.sh'
                 }
 	    }  	       
     }
