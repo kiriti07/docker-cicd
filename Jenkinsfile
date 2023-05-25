@@ -8,7 +8,8 @@ pipeline {
         }
         stage('Pull Sources') {
             steps {
-             git url: 'https://github.com/kiriti07/docker-cicd.git', branch: 'main'
+		    git url: 'https://github.com/kiriti07/docker-cicd.git', branch: 'main'
+		    sh 'chmod +x /var/lib/jenkins/workspace/DockerImage/'
             }
          }
         
@@ -28,7 +29,7 @@ pipeline {
           steps {
 		  sh 'chmod +x /var/lib/jenkins/workspace/DockerImage/create-container.sh'
 		  sh './create-container.sh'
-            //sh './create-container.sh'
+            	//sh './create-container.sh'
                 }
 	    }  	       
     }
