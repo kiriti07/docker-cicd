@@ -7,6 +7,7 @@ pipeline {
         DOCKER_IMAGE_NAME = 'myweb_nginx'
         DOCKERHUB_REPO = 'kiriti7/nginxapp'
         DOCKERFILE_PATH = '/var/lib/jenkins/workspace/DockerImage/Dockerfile'
+	DOCKER_CONTAINER = 'my-first-nginx'
     }
     
     stages {
@@ -30,7 +31,7 @@ pipeline {
 	
 	stage('Push to Docker Hub') {
             steps {
-		    sh 'docker run -d --name $container_name -p 8080:80 $image_name'
+		    sh 'docker run -d --name $DOCKER_CONTAINER -p 8080:80 $DOCKER_IMAGE_NAME'
 		    sh 'docker ps'
                     sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR -password-stdin'
                     sh 'docker tag $DOCKER_IMAGE_NAME $DOCKERHUB_REPO'
