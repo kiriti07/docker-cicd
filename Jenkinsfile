@@ -21,6 +21,13 @@ pipeline {
                     } catch (Exception e) {
                         error('Docker is not installed. Please install Docker on the Jenkins agent.')
                     }
+			sh '''
+				docker build -t $image_name .
+				docker run -d --name $container_name -p 8080:80 $image_name
+				docker ps
+				output=$(docker ps)
+				echo "$output"
+			'''	
                 }
             }
         }
