@@ -35,15 +35,14 @@ pipeline {
 		    sh 'docker ps'
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR -p Kreative@Clicks@07'
                     sh 'docker tag $DOCKER_IMAGE_NAME $DOCKERHUB_REPO'
-                    sh 'docker push $DOCKERHUB_REPO'
             }
         }
         
 	    
 	      stage ('Deploy') {
           steps {
-		  sh './hello.sh'
-            	  //sh './create-container.sh'
+		  sh 'docker push $DOCKERHUB_REPO'
+            	  echo 'Docker Image has been Successfully Pushed to Docker Hub'
                 }
 	    }  	       
     }
