@@ -33,8 +33,6 @@ pipeline {
                 withCredentials([string(credentialsId: 'dockerhub-password', variable: 'DOCKERHUB_PASSWORD')]) {
 		    sh 'docker run -d --name $container_name -p 8080:80 $image_name'
 		    sh 'docker ps'
-		    output=$(docker ps)
-		    echo "$output"
                     sh 'docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD'
                     sh 'docker tag $DOCKER_IMAGE_NAME $DOCKERHUB_REPO'
                     sh 'docker push $DOCKERHUB_REPO'
