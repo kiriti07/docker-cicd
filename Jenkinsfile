@@ -2,8 +2,8 @@ pipeline {
     agent any
     
     environment {
-        DOCKERHUB_USERNAME = 'kiriti7'
-        DOCKERHUB_PASSWORD = 'Kreative@Clicks@07'
+        //DOCKERHUB_USERNAME = 'kiriti7'
+        DOCKERHUB_PASSWORD = credentials('docker')
         DOCKER_IMAGE_NAME = 'myweb_nginx'
         DOCKERHUB_REPO = 'kiriti7/nginxapp'
         DOCKERFILE_PATH = '/var/lib/jenkins/workspace/DockerImage/Dockerfile'
@@ -24,7 +24,7 @@ pipeline {
 	 
 	 stage('Build') {
             steps {
-                sh 'docker build -t $DOCKER_IMAGE_NAME -f $DOCKERFILE_PATH .'
+                sh 'docker build -t $DOCKER_IMAGE_NAME'
             }
         }
 	
