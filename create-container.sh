@@ -1,5 +1,8 @@
 #!/bin/sh
 
+DOCKERHUB_USERNAME="kiriti7"
+DOCKERHUB_PASSWORD="Kreative@Clicks@07"
+
 folder_path="/home/ec2-user/my_nginx"
 image_name="myweb_nginx"
 container_name="my-nginx-container"
@@ -22,4 +25,9 @@ sudo docker ps
 output=$(docker ps)
 echo "$output"
 
+echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
+
+docker push kiriti7/myweb_nginx:v1.0
+
+echo "Docker Image is pushed successfully"
 
