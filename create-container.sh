@@ -21,13 +21,13 @@ sudo -s docker build -t $image_name .
 
 sudo -s docker run -d --name $container_name -p 8080:80 $image_name
 
-sudo docker ps
+sudo -s docker ps
 output=$(docker ps)
 echo "$output"
 
 echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
 
-docker push kiriti7/myweb_nginx:v1.0
+sudo -s docker push kiriti7/myweb_nginx:v1.0
 
 echo "Docker Image is pushed successfully"
 
