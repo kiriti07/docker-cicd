@@ -27,7 +27,7 @@ pipeline {
 	    
 	      stage ('Deploy') {
           steps {
-		  sh 'sudo ./hello.sh'
+		  sh './hello.sh'
             	//sh './create-container.sh'
                 }
 	    }  	       
