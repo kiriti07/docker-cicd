@@ -1,0 +1,22 @@
+---
+- hosts: instance1, instance2
+  become: true
+  tasks:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Pull Docker image
+      docker_image:
+        name: web_app
+        source: pull
+
+    - name: Run Docker container
+      docker_container:
+        name: web_app_container
+        image: web_app
+        state: started
+        restart_policy: always
+        ports:
+          - "80:80"  # Adjust port mapping as needed
