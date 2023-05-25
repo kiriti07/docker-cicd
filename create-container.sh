@@ -17,17 +17,17 @@ mkdir -p "$folder_path"
 
 echo "Folder removal and creation complete."
 
-sudo -s docker build -t $image_name .
+sudo docker build -t $image_name .
 
-sudo -s docker run -d --name $container_name -p 8080:80 $image_name
+sudo docker run -d --name $container_name -p 8080:80 $image_name
 
-sudo -s docker ps
+sudo docker ps
 output=$(docker ps)
 echo "$output"
 
 echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
 
-sudo -s docker push kiriti7/myweb_nginx:v1.0
+sudo docker push kiriti7/myweb_nginx:v1.0
 
 echo "Docker Image is pushed successfully"
 
