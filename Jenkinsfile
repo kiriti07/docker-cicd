@@ -24,9 +24,9 @@ pipeline {
 			sh '''
 				image_name="myweb_nginx"
 				container_name="my-nginx-container"
-				docker build -t $image_name .
-				docker run -d --name $container_name -p 8080:80 $image_name
-				docker ps
+				sudo docker build -t $image_name .
+				sudo docker run -d --name $container_name -p 8080:80 $image_name
+				sudo docker ps
 				output=$(docker ps)
 				echo "$output"
 			'''	
