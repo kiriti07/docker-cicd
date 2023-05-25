@@ -13,13 +13,13 @@ if [ -d "$folder_path" ]; then
 fi
 
 echo "Creating folder..."
-mkdir -p "$folder_path"
+sido -s mkdir -p "$folder_path"
 
 echo "Folder removal and creation complete."
 
-docker build -t $image_name .
+sudo -s docker build -t $image_name .
 
-docker run -d --name $container_name -p 8080:80 $image_name
+sudo -s docker run -d --name $container_name -p 8080:80 $image_name
 
 sudo docker ps
 output=$(docker ps)
