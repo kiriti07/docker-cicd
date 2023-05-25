@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         //DOCKERHUB_USERNAME = 'kiriti7'
-        DOCKERHUB_PASSWORD = credentials('docker')
+        DOCKERHUB_CREDENTIALS = credentials('docker')
         DOCKER_IMAGE_NAME = 'myweb_nginx'
         DOCKERHUB_REPO = 'kiriti7/nginxapp'
         DOCKERFILE_PATH = '/var/lib/jenkins/workspace/DockerImage/Dockerfile'
@@ -32,7 +32,7 @@ pipeline {
             steps {
 		    sh 'docker run -d --name $container_name -p 8080:80 $image_name'
 		    sh 'docker ps'
-                    sh 'docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD'
+                    sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR -password-stdin'
                     sh 'docker tag $DOCKER_IMAGE_NAME $DOCKERHUB_REPO'
                     sh 'docker push $DOCKERHUB_REPO'
             }
