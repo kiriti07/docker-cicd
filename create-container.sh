@@ -13,7 +13,7 @@ if [ -d "$folder_path" ]; then
 fi
 
 echo "Creating folder..."
-sido -s mkdir -p "$folder_path"
+sudo -s mkdir -p "$folder_path"
 
 echo "Folder removal and creation complete."
 
