@@ -1,5 +1,14 @@
 pipeline {
     agent any
+    
+    environment {
+        DOCKERHUB_USERNAME = credentials('kiriti7')
+        DOCKERHUB_PASSWORD = credentials('Kreative@Clicks@07')
+        DOCKER_IMAGE_NAME = 'myweb_nginx'
+        DOCKERHUB_REPO = 'kiriti7/nginxapp'
+        DOCKERFILE_PATH = '/var/lib/jenkins/workspace/DockerImage/Dockerfile'
+    }
+    
     stages {
         stage('Welcome') { 
             steps { 
@@ -9,34 +18,33 @@ pipeline {
         stage('Pull Sources') {
             steps {
 		    git url: 'https://github.com/kiriti07/docker-cicd.git', branch: 'main'
-		    sh 'chmod +x /var/lib/jenkins/workspace/DockerImage/'
+		    //sh 'chmod +x /var/lib/jenkins/workspace/DockerImage/'
             }
          }
-        
-        stage('Build') {
+	 
+	 stage('Build') {
             steps {
-                script {
-                    try {
-                        sh 'docker --version'
-                    } catch (Exception e) {
-                        error('Docker is not installed. Please install Docker on the Jenkins agent.')
-                    }
-			sh '''
-				image_name="myweb_nginx"
-				container_name="my-nginx-container"
-				sudo docker build -t $image_name .
-				sudo docker run -d --name $container_name -p 8080:80 $image_name
-				sudo docker ps
-				output=$(docker ps)
-				echo "$output"
-			'''	
+                sh 'docker build -t $DOCKER_IMAGE_NAME -f $DOCKERFILE_PATH .'
+            }
+        }
+	
+	stage('Push to Docker Hub') {
+            steps {
+                withCredentials([string(credentialsId: 'dockerhub-password', variable: 'DOCKERHUB_PASSWORD')]) {
+		    sh 'docker run -d --name $container_name -p 8080:80 $image_name'
+		    sh 'docker ps'
+		    output=$(docker ps)
+		    echo "$output"
+                    sh 'docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD'
+                    sh 'docker tag $DOCKER_IMAGE_NAME $DOCKERHUB_REPO'
+                    sh 'docker push $DOCKERHUB_REPO'
                 }
             }
         }
+        
 	    
 	      stage ('Deploy') {
           steps {
-		  sh 'chmod +x /var/lib/jenkins/workspace/DockerImage/create-container.sh'
 		  sh './hello.sh'
             	  //sh './create-container.sh'
                 }
