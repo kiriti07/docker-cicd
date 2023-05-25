@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        DOCKERHUB_USERNAME = credentials('kiriti7')
+        DOCKERHUB_USERNAME = 'kiriti7'
         DOCKERHUB_PASSWORD = credentials('Kreative@Clicks@07')
         DOCKER_IMAGE_NAME = 'myweb_nginx'
         DOCKERHUB_REPO = 'kiriti7/nginxapp'
