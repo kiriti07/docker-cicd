@@ -31,7 +31,7 @@ pipeline {
 	
 	stage('Push to Docker Hub') {
             steps {
-		    sh 'docker run -d --name $DOCKER_CONTAINER -p 8080:80 $DOCKER_IMAGE_NAME'
+		    sh 'docker run -d --name $DOCKER_CONTAINER -p 8070:80 $DOCKER_IMAGE_NAME'
 		    sh 'docker ps'
                     sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR -password-stdin'
                     sh 'docker tag $DOCKER_IMAGE_NAME $DOCKERHUB_REPO'
