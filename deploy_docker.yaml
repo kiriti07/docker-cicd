@@ -1,5 +1,5 @@
 ---
-- hosts: instance1, instance2
+- hosts: 52.66.251.108, 15.206.151.32
   become: true
   tasks:
     - name: Install Docker
